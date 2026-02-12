@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# BrandBrain AI - Social Media Content Automator
 
-# Run and deploy your AI Studio app
+BrandBrain AI is a world-class senior frontend engineer's solution to building a social media brand. It automates the tedious parts of content curation, allowing you to focus on strategy and reviewing content before it goes live.
 
-This contains everything you need to run your app locally.
+## Key Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1hemPgJ643TNreuZnQeNe71poaUDusFbp
+- **Niche Selection & Strategy**: Define your brand's niche, target audience, and tone.
+- **AI Content Curation**: Uses Gemini to generate high-converting post drafts including captions and hashtags.
+- **Visual Generation**: 
+  - **Images**: High-quality aesthetic visuals generated using the latest Gemini image models.
+  - **Video**: Short-form cinematic videos powered by Veo technology.
+- **Direct X.com Integration**: Link your X (formerly Twitter) account via API credentials for one-click publishing.
+- **Activity Console**: Real-time terminal-style logging of AI "thinking" and API connections.
+- **Local First**: Your brand data and API credentials are encrypted and stored directly in your browser's local storage.
 
-## Run Locally
+## How It Works
 
-**Prerequisites:**  Node.js
+1. **Setup**: Define your niche and brand personality.
+2. **Generate**: Click "Generate New Batch" to get 5 curated post drafts.
+3. **Review & Refine**: Edit captions, hashtags, and generate unique AI visuals for each post.
+4. **Publish**: Connect your social handles and post directly or mark as scheduled.
 
+## Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- **React 19**
+- **Tailwind CSS**
+- **Gemini API** (@google/genai)
+- **Direct Social Media API Integrations**

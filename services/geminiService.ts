@@ -4,19 +4,6 @@ import { MediaType, PostContent, UserNiche } from "../types";
 
 const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
-/**
- * Ensures a valid API key is selected via the AI Studio dialog.
- * This is required for high-tier models like gemini-3-pro and Veo.
- */
-const ensureApiKey = async () => {
-  if (window.aistudio && !(await window.aistudio.hasSelectedApiKey())) {
-    await window.aistudio.openSelectKey();
-    // Guideline: Assume successful after trigger
-    return true;
-  }
-  return true;
-};
-
 export const generatePostDrafts = async (niche: UserNiche): Promise<Partial<PostContent>[]> => {
   const ai = getAI();
   const prompt = `Generate 5 creative social media post drafts for a brand in the "${niche.name}" niche. 
@@ -55,18 +42,15 @@ export const generatePostDrafts = async (niche: UserNiche): Promise<Partial<Post
 };
 
 export const generatePostImage = async (prompt: string): Promise<string> => {
-  // Use gemini-3-pro-image-preview for high quality and to ensure key-based access
-  await ensureApiKey();
-  
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAI();
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-image-preview',
+      model: 'gemini-2.5-flash-image',
       contents: {
         parts: [{ text: `High quality, aesthetic social media post image. Style: Modern, Professional. Subject: ${prompt}` }]
       },
       config: {
-        imageConfig: { aspectRatio: "1:1", imageSize: "1K" }
+        imageConfig: { aspectRatio: "1:1" }
       }
     });
 
@@ -77,18 +61,13 @@ export const generatePostImage = async (prompt: string): Promise<string> => {
     }
     throw new Error("No image data found in response");
   } catch (error: any) {
-    if (error.message?.includes("permission") || error.message?.includes("403")) {
-      await window.aistudio?.openSelectKey();
-      throw new Error("Please select a valid paid API key to generate images.");
-    }
-    throw error;
+    console.error("Image generation error:", error);
+    throw new Error("Failed to generate image. Please check your API configuration.");
   }
 };
 
 export const generatePostVideo = async (prompt: string): Promise<string> => {
-  await ensureApiKey();
-
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAI();
   try {
     let operation = await ai.models.generateVideos({
       model: 'veo-3.1-fast-generate-preview',
@@ -110,10 +89,7 @@ export const generatePostVideo = async (prompt: string): Promise<string> => {
     const blob = await response.blob();
     return URL.createObjectURL(blob);
   } catch (error: any) {
-    if (error.message?.includes("permission") || error.message?.includes("403")) {
-      await window.aistudio?.openSelectKey();
-      throw new Error("Please select a valid paid API key for video generation.");
-    }
-    throw error;
+    console.error("Video generation error:", error);
+    throw new Error("Failed to generate video. Please check your API configuration.");
   }
 };

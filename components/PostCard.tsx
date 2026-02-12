@@ -22,7 +22,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onUpdate, onDelete, connectio
 
   const handleGenerateMedia = async () => {
     setLoadingMedia(true);
-    onLog(`AI generating visual for topic: "${post.topic}" using Gemini 3 Pro Image...`, "info");
+    onLog(`AI generating visual for topic: "${post.topic}" using Gemini...`, "info");
     try {
       let url = '';
       if (post.mediaType === MediaType.IMAGE) {
@@ -35,8 +35,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onUpdate, onDelete, connectio
       }
       onUpdate({ ...post, mediaUrl: url });
     } catch (error) {
-      onLog(`Media generation failed. Ensure your Gemini API project has billing enabled.`, "error");
-      alert("Failed to generate media. Please ensure you have a valid paid API key selected.");
+      onLog(`Media generation failed. Ensure your API key is valid and has required permissions.`, "error");
+      alert("Failed to generate media. Please check your network and API configuration.");
     } finally {
       setLoadingMedia(false);
     }
