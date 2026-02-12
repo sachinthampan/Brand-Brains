@@ -1,0 +1,8 @@
+{
+  "name": "BrandBrain AI",
+  "description": "An intelligent social media content curator and strategist that automates niche-specific content generation, visual creation, and posting workflows.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
